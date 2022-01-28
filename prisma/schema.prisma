@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  username String @db.VarChar(15)
+  email String @unique @db.VarChar(25)
+  password String @db.VarChar(64)
+  portfolios Portfolio[]
+}
+
+model Portfolio {
+  portfolioId Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  name String @db.VarChar(20)
+  description String? @db.VarChar(255)
+  owner User @relation(fields: [ownerId], references: [userId])
+  ownerId Int
+  
+  Cryptos Crypto[]
+}
+
+model Crypto {
+  cryptoId Int @id @default(autoincrement())
+  name String @unique @db.VarChar(20)
+  tag String @unique @db.VarChar(8)
+  supply BigInt @db.UnsignedBigInt @default(0)
+
+  Portfolios Portfolio[]
+}

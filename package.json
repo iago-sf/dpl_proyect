@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for a DSW-DPL proyect for the 2º trimester.",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon index.js"
+  },
+  "author": "Iago Senin Fernandez",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^3.8.1",
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "prisma": "^3.8.1"
+  }
+}
