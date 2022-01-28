@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Backend for a DSW-DPL proyect for the 2º trimester.",
   "main": "index.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iaguerreles/dpl_proyect.git"
+  },
   "scripts": {
     "devStart": "nodemon index.js"
   },
