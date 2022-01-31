@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -35,7 +35,7 @@ model Crypto {
   cryptoId Int    @id @default(autoincrement())
   name     String @unique @db.VarChar(20)
   tag      String @unique @db.VarChar(8)
-  supply   BigInt @default(0) @db.UnsignedBigInt
+  supply   BigInt @default(0) @db.BigInt
 
   Portfolios addCrypto[]
 }
