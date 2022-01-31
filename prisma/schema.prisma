@@ -41,9 +41,10 @@ model Crypto {
 }
 
 model addCrypto {
-  id      Int      @id @default(autoincrement())
-  addedPrice Decimal @db.Decimal(17, 10)
-  addedAt DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  cuantity   Decimal  @db.Decimal(17, 10)
+  addedPrice Decimal  @db.Decimal(17, 10)
+  addedAt    DateTime @default(now())
 
   portfolio   Portfolio @relation(fields: [portfolioId], references: [portfolioId], onDelete: Cascade)
   portfolioId Int
