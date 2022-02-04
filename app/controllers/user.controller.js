@@ -14,6 +14,7 @@ const userController = {
             .catch((err) => {
                 res.send({
                     error: err,
+                    type: 'not-found',
                     message: "The user could not be found.",
                 });
             });
@@ -21,6 +22,7 @@ const userController = {
         res.send(user);
     },
     create: async (req, res) => {
+        console.log(req.body);
         const password = bcrypt.hashSync(req.body.password, saltRounds);
         const user = await prisma.user
             .create({
@@ -33,6 +35,7 @@ const userController = {
             .catch((err) => {
                 res.send({
                     error: err,
+                    type: 'duplicated',
                     message: "The user could not be created.",
                 });
             });
