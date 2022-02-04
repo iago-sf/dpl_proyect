@@ -1,5 +1,4 @@
 import prismaClient from "@prisma/client";
-import bcrypt from 'bcrypt';
 const prisma = new prismaClient.PrismaClient();
 const saltRounds = 10;
 
@@ -19,17 +18,24 @@ const userController = {
                 });
             });
 
-        res.send(user);
+        if(user.password != req.body.password){
+            res.send({
+                error: 'err',
+                type: 'wrong-credentials',
+                message: "The user could not be found.",
+            });
+            
+        } else {
+            res.send(user);
+        }
     },
     create: async (req, res) => {
-        console.log(req.body);
-        const password = bcrypt.hashSync(req.body.password, saltRounds);
         const user = await prisma.user
             .create({
                 data: {
                     username: req.body.username,
                     email: req.body.email,
-                    password: password,
+                    password: req.body.password,
                 },
             })
             .catch((err) => {
