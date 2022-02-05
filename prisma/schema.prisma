@@ -15,7 +15,6 @@ model User {
   createdAt DateTime @default(now())
   username  String   @db.VarChar(15)
   email     String   @unique @db.VarChar(25)
-  password  String   @db.VarChar(64)
 
   portfolios Portfolio[]
 }
@@ -35,6 +34,7 @@ model Crypto {
   cryptoId Int    @id @default(autoincrement())
   name     String @unique @db.VarChar(20)
   tag      String @unique @db.VarChar(8)
+  icon     String @db.VarChar(255)
   supply   BigInt @default(0) @db.BigInt
 
   Portfolios addCrypto[]

@@ -9,7 +9,7 @@
     "url": "git+https://github.com/iaguerreles/dpl_proyect.git"
   },
   "scripts": {
-    "devStart": "nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "author": "Iago Senin Fernandez",
   "license": "ISC",
