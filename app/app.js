@@ -1,19 +1,20 @@
 import express from 'express';
 import cors from 'cors';
+
 import userRouter from './routes/user.routes.js';
-import pruebaRouter from "./routes/prueba.routes.js";
+import cryptoRouter from './routes/crypto.routes.js';
+import portfolioRouter from './routes/portfolio.routes.js';
+import addCryptoRouter from './routes/addCrypto.routes.js';
+
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded( {extended: true} ))
 app.use(cors()); 
 
-
-app.use('/', pruebaRouter);
-app.use('/user', userRouter);
-
-app.get('/', (req, res) => {
-  console.log('working');
-});
+app.use('/user', userRouter); 
+app.use('/crypto', cryptoRouter);
+app.use('/portfolio', portfolioRouter);
+app.use('/addCrypto', addCryptoRouter);
 
 export default app;
