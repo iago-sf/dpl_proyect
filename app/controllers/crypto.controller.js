@@ -4,11 +4,7 @@ const prisma = new prismaClient.PrismaClient();
 const cryptoController = {
     list: async (req, res) => {
         const crypto = await prisma.crypto
-            .findUnique({
-                where: {
-                    email: req.body.email,
-                },
-            })
+            .findMany()
             .catch((err) => {
                 res.send({
                     error: err,
@@ -23,9 +19,10 @@ const cryptoController = {
         const crypto = await prisma.crypto
             .create({
                 data: {
-                    cryptoname: req.body.cryptoname,
-                    email: req.body.email,
-                    password: req.body.password,
+                    name: req.body.name,
+                    tag: req.body.tag,
+                    icon: req.body.icon,
+                    supply: req.body.supply,
                 },
             })
             .catch((err) => {

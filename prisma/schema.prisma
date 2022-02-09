@@ -35,7 +35,7 @@ model Crypto {
   name     String @unique @db.VarChar(20)
   tag      String @unique @db.VarChar(8)
   icon     String @db.VarChar(255)
-  supply   BigInt @default(0) @db.BigInt
+  supply   Int @default(0)
 
   Portfolios addCrypto[]
 }
