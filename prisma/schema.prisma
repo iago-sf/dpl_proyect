@@ -30,24 +30,13 @@ model Portfolio {
   Cryptos addCrypto[]
 }
 
-model Crypto {
-  cryptoId Int    @id @default(autoincrement())
-  name     String @unique @db.VarChar(20)
-  tag      String @unique @db.VarChar(8)
-  icon     String @db.VarChar(255)
-  supply   Int @default(0)
-
-  Portfolios addCrypto[]
-}
-
 model addCrypto {
   id         Int      @id @default(autoincrement())
+  coin       String   @unique @db.VarChar(30)
   cuantity   Decimal  @db.Decimal(17, 10)
   addedPrice Decimal  @db.Decimal(17, 10)
   addedAt    DateTime @default(now())
 
   portfolio   Portfolio @relation(fields: [portfolioId], references: [portfolioId], onDelete: Cascade)
   portfolioId Int
-  crypto      Crypto    @relation(fields: [cryptoId], references: [cryptoId], onDelete: Cascade)
-  cryptoId    Int
 }
