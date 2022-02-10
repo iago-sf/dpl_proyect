@@ -6,7 +6,7 @@ const portfolioController = {
         const portfolio = await prisma.portfolio
             .findUnique({
                 where: {
-                    email: req.body.email,
+                    
                 },
             })
             .catch((err) => {
@@ -23,9 +23,9 @@ const portfolioController = {
         const portfolio = await prisma.portfolio
             .create({
                 data: {
-                    portfolioname: req.body.portfolioname,
-                    email: req.body.email,
-                    password: req.body.password,
+                    name: req.body.name,
+                    description: req.body.description,
+                    ownerId: req.body.ownerId
                 },
             })
             .catch((err) => {
