@@ -13,7 +13,7 @@ datasource db {
 model User {
   userId    Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  username  String   @db.VarChar(15)
+  username  String   @db.VarChar(30)
   email     String   @unique @db.VarChar(25)
 
   portfolios Portfolio[]

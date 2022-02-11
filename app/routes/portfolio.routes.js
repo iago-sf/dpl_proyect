@@ -3,7 +3,7 @@ import portfolioController from "../controllers/portfolio.controller.js";
 const router = express.Router();
 
 router
-    .get("/", portfolioController.list)
+    .get("/get/:id", portfolioController.getPortfoliosByUserEmail)
     .post("/", portfolioController.create)
     .put("/:id", portfolioController.update)
     .delete('/:id', portfolioController.deleted);

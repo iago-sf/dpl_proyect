@@ -24,8 +24,7 @@ const userController = {
             .create({
                 data: {
                     username: req.body.username,
-                    email: req.body.email,
-                    password: req.body.password,
+                    email: req.body.email
                 },
             })
             .catch((err) => {

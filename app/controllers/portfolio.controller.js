@@ -2,11 +2,15 @@ import prismaClient from "@prisma/client";
 const prisma = new prismaClient.PrismaClient();
 
 const portfolioController = {
-    list: async (req, res) => {
-        const portfolio = await prisma.portfolio
+    getPortfoliosByUserEmail: async (req, res) => {
+        const portfolios = await prisma.user
             .findUnique({
                 where: {
-                    
+                    userId: parseInt(req.params.id),
+                },
+
+                inlcude: {
+                    portfolios: true,
                 },
             })
             .catch((err) => {
@@ -17,7 +21,7 @@ const portfolioController = {
                 });
             });
 
-        res.send(portfolio);
+        res.send(portfolios);
     },
     create: async (req, res) => {
         const portfolio = await prisma.portfolio
