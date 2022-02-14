@@ -20,6 +20,9 @@ const userController = {
         res.send(user);
     },
     create: async (req, res) => {
+        if(req.body.email.trim() == "" || req.body.email == null ) res.send({error: "invalid-field", type: "invalid-email", message: "Invalid email"});
+        if(req.body.username.trim() == "" || req.body.username == null ) res.send({error: "invalid-field", type: "invalid-username", message: "Invalid username"});
+
         const user = await prisma.user
             .create({
                 data: {
@@ -44,7 +47,7 @@ const userController = {
                     userId: parseInt(req.params.id),
                 },
                 data: {
-                    password: password,
+                    username: req.body.username,
                 },
             })
             .catch((err) => {
@@ -71,6 +74,20 @@ const userController = {
             });
 
         res.send(user);
+    },
+    all: async (req, res) => {
+        const users = await prisma.user
+            .findMany({
+                
+            })
+            .catch((err) => {
+                res.send({
+                    error: err,
+                    message: "The user could not be deleted.",
+                });
+            });
+
+        res.send(users);
     },
 };
 

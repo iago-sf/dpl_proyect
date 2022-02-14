@@ -25,7 +25,7 @@ model Portfolio {
   name        String   @db.VarChar(20)
   description String?  @db.VarChar(255)
 
-  owner   User        @relation(fields: [ownerId], references: [userId])
+  owner   User        @relation(fields: [ownerId], references: [userId], onDelete: Cascade)
   ownerId Int
   Cryptos addCrypto[]
 }

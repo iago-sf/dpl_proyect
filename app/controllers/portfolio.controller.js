@@ -9,7 +9,7 @@ const portfolioController = {
                     userId: parseInt(req.params.id),
                 },
 
-                inlcude: {
+                include: {
                     portfolios: true,
                 },
             })
@@ -24,6 +24,8 @@ const portfolioController = {
         res.send(portfolios);
     },
     create: async (req, res) => {
+        if(req.body.name.trim() == "" || req.body.name == null ) res.send({error: "invalid-field", type: "invalid-name", message: "Name field can't be empty"});
+        
         const portfolio = await prisma.portfolio
             .create({
                 data: {
@@ -49,7 +51,7 @@ const portfolioController = {
                     portfolioId: parseInt(req.params.id),
                 },
                 data: {
-                    password: password,
+                    description: req.body.description,
                 },
             })
             .catch((err) => {
