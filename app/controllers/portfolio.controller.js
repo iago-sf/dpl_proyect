@@ -2,6 +2,27 @@ import prismaClient from "@prisma/client";
 const prisma = new prismaClient.PrismaClient();
 
 const portfolioController = {
+    getPortfoliosWithCryptos: async (req, res) => {
+        const portfolios = await prisma.portfolio
+            .findUnique({
+                where: {
+                    portfolioId: parseInt(req.params.id),
+                },
+
+                include: {
+                    Cryptos: true,
+                },
+            })
+            .catch((err) => {
+                res.send({
+                    error: err,
+                    type: 'not-found',
+                    message: "The portfolio could not be found.",
+                });
+            });
+
+        res.send(portfolios);
+    },
     getPortfoliosByUserEmail: async (req, res) => {
         const portfolios = await prisma.user
             .findUnique({

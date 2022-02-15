@@ -23,9 +23,10 @@ const addCryptoController = {
         const addCrypto = await prisma.addCrypto
             .create({
                 data: {
-                    addCryptoname: req.body.addCryptoname,
-                    email: req.body.email,
-                    password: req.body.password,
+                    coin: req.body.coin,
+                    cuantity: parseFloat(req.body.cuantity),
+                    addedPrice: parseFloat(req.body.addedPrice),
+                    portfolioId: parseInt(req.body.portfolioId),
                 },
             })
             .catch((err) => {
@@ -42,10 +43,10 @@ const addCryptoController = {
         const addCrypto = await prisma.addCrypto
             .update({
                 where: {
-                    addCryptoId: parseInt(req.params.id),
+                    id: parseInt(req.params.id),
                 },
                 data: {
-                    password: password,
+                    cuantity: parseFloat(req.body.cuantity)
                 },
             })
             .catch((err) => {
@@ -61,13 +62,13 @@ const addCryptoController = {
         const addCrypto = await prisma.addCrypto
             .delete({
                 where: {
-                    addCryptoId: parseInt(req.params.id),
+                    id: parseInt(req.params.id),
                 },
             })
             .catch((err) => {
                 res.send({
                     error: err,
-                    message: "The addCrypto could not be deleted.",
+                    message: "The crypto could not be deleted.",
                 });
             });
 
