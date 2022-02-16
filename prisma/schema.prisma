@@ -32,7 +32,7 @@ model Portfolio {
 
 model addCrypto {
   id         Int      @id @default(autoincrement())
-  coin       String   @unique @db.VarChar(30)
+  coin       String   @db.VarChar(30)
   cuantity   Decimal  @db.Decimal(17, 10)
   addedPrice Decimal  @db.Decimal(17, 10)
   addedAt    DateTime @default(now())
