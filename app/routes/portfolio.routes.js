@@ -4,7 +4,7 @@ const router = express.Router();
 
 router
     .get("/:id", portfolioController.getPortfoliosWithCryptos)
-    .get("/get/:id", portfolioController.getPortfoliosByUserEmail)
+    .get("/get/:id", portfolioController.getPortfoliosByUserId)
     .post("/", portfolioController.create)
     .put("/:id", portfolioController.update)
     .delete('/:id', portfolioController.deleted);

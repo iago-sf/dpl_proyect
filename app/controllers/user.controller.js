@@ -3,61 +3,101 @@ const prisma = new prismaClient.PrismaClient();
 
 const userController = {
     list: async (req, res) => {
-        const user = await prisma.user
-            .findUnique({
-                where: {
-                    email: req.body.email,
-                },
-            })
-            .catch((err) => {
+        if(req.body.email.trim() == "" || req.body.email == null || req.body.email.length > 25) {
+            res.send({error: "invalid-field", type: "invalid-email", message: "Invalid email"});
+
+        } else {
+            const user = await prisma.user
+                .findUnique({
+                    where: {
+                        email: req.body.email,
+                    },
+                })
+                .catch((err) => {
+                    res.send({
+                        error: err,
+                        type: 'not-found',
+                        message: "The user could not be found.",
+                    });
+                });
+
+            if(user){
+                res.send(user);
+            } else {
                 res.send({
-                    error: err,
+                    error: 'unknown',
                     type: 'not-found',
                     message: "The user could not be found.",
                 });
-            });
-
-        res.send(user);
+            }
+        }
+        
     },
     create: async (req, res) => {
-        if(req.body.email.trim() == "" || req.body.email == null ) res.send({error: "invalid-field", type: "invalid-email", message: "Invalid email"});
-        if(req.body.username.trim() == "" || req.body.username == null ) res.send({error: "invalid-field", type: "invalid-username", message: "Invalid username"});
+        if(req.body.email.trim() == "" || req.body.email == null || req.body.email.length > 25) {
+            res.send({error: "invalid-field", type: "invalid-email", message: "Invalid email"});
 
-        const user = await prisma.user
-            .create({
-                data: {
-                    username: req.body.username,
-                    email: req.body.email
-                },
-            })
-            .catch((err) => {
-                res.send({
-                    error: err,
-                    type: 'duplicated',
-                    message: "The user could not be created.",
+        } else if(req.body.username.trim() == "" || req.body.username == null || req.body.username.length > 30) {
+            res.send({error: "invalid-field", type: "invalid-username", message: "Invalid username"});
+        
+        } else {
+            const user = await prisma.user
+                .create({
+                    data: {
+                        username: req.body.username,
+                        email: req.body.email
+                    },
+                })
+                .catch((err) => {
+                    res.send({
+                        error: err,
+                        type: 'duplicated',
+                        message: "The user could not be created.",
+                    });
                 });
-            });
 
-        res.send(user);
+            if(user){
+                res.send(user);
+            } else {
+                res.send({
+                    error: 'unknown',
+                    type: 'not-found',
+                    message: "The user could not be found.",
+                });
+            }
+        }
     },
     update: async (req, res) => {
-        const user = await prisma.user
-            .update({
-                where: {
-                    userId: parseInt(req.params.id),
-                },
-                data: {
-                    username: req.body.username,
-                },
-            })
-            .catch((err) => {
-                res.send({
-                    error: err,
-                    message: "The user could not be updated.",
+        if(req.body.username.trim() == "" || req.body.username == null || req.body.username.length > 30) {
+            res.send({error: "invalid-field", type: "invalid-username", message: "Invalid username"});
+        
+        } else {
+            const user = await prisma.user
+                .update({
+                    where: {
+                        userId: parseInt(req.params.id),
+                    },
+                    data: {
+                        username: req.body.username,
+                    },
+                })
+                .catch((err) => {
+                    res.send({
+                        error: err,
+                        message: "The user could not be updated.",
+                    });
                 });
-            });
 
-        res.send(user);
+            if(user){
+                res.send(user);
+            } else {
+                res.send({
+                    error: 'unknown',
+                    type: 'not-found',
+                    message: "The user could not be found.",
+                });
+            }
+        }
     },
     deleted: async (req, res) => {
         const user = await prisma.user
@@ -73,13 +113,19 @@ const userController = {
                 });
             });
 
-        res.send(user);
+        if(user){
+            res.send(user);
+        } else {
+            res.send({
+                error: 'unknown',
+                type: 'not-found',
+                message: "The user could not be found.",
+            });
+        }
     },
     all: async (req, res) => {
         const users = await prisma.user
-            .findMany({
-                
-            })
+            .findMany({})
             .catch((err) => {
                 res.send({
                     error: err,
@@ -87,7 +133,15 @@ const userController = {
                 });
             });
 
-        res.send(users);
+        if(users){
+            res.send(users);
+        } else {
+            res.send({
+                error: 'unknown',
+                type: 'not-found',
+                message: "The user could not be found.",
+            });
+        }
     },
 };
 
